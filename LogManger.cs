@@ -1,6 +1,7 @@
 ﻿using ChaseLabs.CLLogger.Events;
 using ChaseLabs.CLLogger.Interfaces;
 using System;
+using System.Diagnostics;
 using System.IO;
 using static ChaseLabs.CLLogger.Lists;
 
@@ -16,11 +17,16 @@ namespace ChaseLabs.CLLogger
     /// </summary>
     public class LogManger : ILog
     {
-        private string _pattern_prefix;
+        private readonly string _pattern_prefix;
         private static string _path = "";
         private static LogTypes minLogType = LogTypes.All;
         private readonly bool fatal = false, warn = false, info = false, debug = false, error = false, logDefaultConsole = false;
 
+        /// <summary>
+        /// Initializes an Empty LogManager
+        /// <para>See <see cref="Empty"/></para>
+        /// </summary>
+        /// <returns></returns>
         public static LogManger Init()
         {
             return Empty();
@@ -28,57 +34,29 @@ namespace ChaseLabs.CLLogger
 
         /// <summary>
         /// Sets the Minimum Log Type
-        /// <remark>
-        /// <para>
-        /// See <see cref="LogTypes"/> Documentation for Sorting Order
-        /// </para>
-        /// </remark>
-        /// <param name="minLogType"></param>
-        /// <returns></returns>
         /// </summary>
+        /// <param name="minLogType">See <see cref="LogTypes"/> Documentation for Sorting Order</param>
+        /// <returns></returns>
         public LogManger SetMinLogType(LogTypes minLogType)
         {
             return new LogManger(Path, minLogType, Pattern, logDefaultConsole);
         }
         /// <summary>
         /// Sets the Log File Path
-        /// <remark>
-        /// <para>
-        /// See <see cref="LogTypes"/> Documentation for Sorting Order
-        /// </para>
-        /// </remark>
-        /// <example>
-        /// Example:
-        /// <code>
-        /// SetLogDirectory("C:\Temp\TestLogFile.txt")
-        /// </code>
-        /// </example>
-        /// <param name="minLogType"></param>
-        /// <returns></returns>
         /// </summary>
+        /// <param name="path">Log Path<para>Example</para><code>path="c:\temp\latest.log"</code></param>
+        /// <returns></returns>
         public LogManger SetLogDirectory(string path)
         {
             return new LogManger(path, minLogType, Pattern, logDefaultConsole);
         }
         /// <summary>
         /// Sets the Log File Path
-        /// <remark>
-        /// <para>
-        /// See <see cref="LogTypes"/> Documentation for Sorting Order
-        /// </para>
-        /// </remark>
-        /// <example>
-        /// Example:
-        /// <code>
-        /// SetLogDirectory(new System.IO.FileInfo("C:\Temp\TestLogFile.txt"))
-        /// </code>
-        /// </example>
-        /// <param name="minLogType"></param>
-        /// <returns></returns>
         /// </summary>
+        /// <param name="path">Log Path<para>Example</para><code>path="c:\temp\latest.log"</code></param>
+        /// <returns></returns>
         public LogManger SetLogDirectory(FileInfo path)
         {
-
             return new LogManger(path.FullName, minLogType, Pattern, logDefaultConsole);
         }
         /// <summary>
@@ -96,6 +74,21 @@ namespace ChaseLabs.CLLogger
         public LogManger DisableDefaultConsoleLogging()
         {
             return new LogManger(Path, minLogType, Pattern, false);
+        }
+        /// <summary>
+        /// <para>%DATE% - Current Date and Time</para>
+        /// <para>%TYPE% - Log Type</para>
+        /// <para>%MESSAGE% - The Message</para>
+        /// Example
+        /// <code>
+        /// [ %TYPE%: %DATE% ]: %MESSAGE%
+        /// </code>
+        /// <para>[ ERROR: 01/01/1999/8:30:25 ] Example Message is Surprising</para>
+        /// </summary>
+        /// <returns></returns>
+        public LogManger SetPattern(string Pattern)
+        {
+            return new LogManger(Path, minLogType, Pattern, logDefaultConsole);
         }
 
         /// <summary>
@@ -116,7 +109,7 @@ namespace ChaseLabs.CLLogger
         {
             _path = path;
             minLogType = _minLogType;
-            Pattern = _pattern_prefix;
+            this._pattern_prefix = _pattern_prefix;
             logDefaultConsole = _logDefaultConsole;
 
             switch (minLogType)
@@ -156,26 +149,38 @@ namespace ChaseLabs.CLLogger
             }
         }
 
+        /// <summary>
+        /// Returns if Fatal Messages will be Logged
+        /// </summary>
         public bool IsFatalEnabled => fatal;
-
+        /// <summary>
+        /// Returns if Warning Messages will be Logged
+        /// </summary>
         public bool IsWarnEnabled => warn;
-
+        /// <summary>
+        /// Returns if Informational Messages will be Logged
+        /// </summary>
         public bool IsInfoEnabled => info;
-
+        /// <summary>
+        /// Returns if Debug Messages will be Logged
+        /// </summary>
         public bool IsDebugEnabled => debug;
-
+        /// <summary>
+        /// Returns if Error Messages will be Logged
+        /// </summary>
         public bool IsErrorEnabled => error;
 
         /// <summary>
-        /// <para>%DATE% - Current Date</para>
+        /// <para>%DATE% - Current Date and Time</para>
         /// <para>%TYPE% - Log Type</para>
         /// <para>%MESSAGE% - The Message</para>
         /// Example
         /// <code>
         /// [ %TYPE%: %DATE% ]: %MESSAGE%
         /// </code>
+        /// <para>[ ERROR: 01/01/1999/8:30:25 ] Example Message is Surprising</para>
         /// </summary>
-        public string Pattern { get => _pattern_prefix; set => _pattern_prefix = value; }
+        public string Pattern => _pattern_prefix;
 
         /// <summary>
         /// Gets the Current Log File Path
@@ -193,7 +198,7 @@ namespace ChaseLabs.CLLogger
             LoggedMessage?.Invoke(this, new LogEventArgs() { Log = message });
         }
 
-        protected void SendMessage(object message)
+        private void SendMessage(object message)
         {
             if (!Directory.GetParent(_path).Exists)
             {
@@ -206,6 +211,7 @@ namespace ChaseLabs.CLLogger
             writer.Dispose();
             writer.Close();
             OnMessageLogged(message as string);
+            Console.WriteLine(message);
         }
 
         public void Debug(object message)
@@ -223,12 +229,12 @@ namespace ChaseLabs.CLLogger
 
         public void Debug(object message, Exception exception)
         {
-            SendMessage(Pattern.Replace("%DATE%", DateTime.Now.ToString()).Replace("%TYPE%", "DEBUG").Replace("%MESSAGE%", message as string) + $" [Exception {exception.GetType().Name} ]:{Environment.NewLine}{exception.StackTrace}");
+            SendMessage(Pattern.Replace("%DATE%", DateTime.Now.ToString()).Replace("%TYPE%", "DEBUG").Replace("%MESSAGE%", message as string) + $" [Exception {exception.GetType().Name} at line {new StackTrace(exception, true).GetFrame(0).GetFileLineNumber()}]:{Environment.NewLine}{exception.StackTrace}");
         }
 
         public void Info(object message, Exception exception)
         {
-            SendMessage(Pattern.Replace("%DATE%", DateTime.Now.ToString()).Replace("%TYPE%", "INFO").Replace("%MESSAGE%", message as string) + $" [Exception {exception.GetType().Name} ]:{Environment.NewLine}{exception.StackTrace}");
+            SendMessage(Pattern.Replace("%DATE%", DateTime.Now.ToString()).Replace("%TYPE%", "INFO").Replace("%MESSAGE%", message as string) + $" [Exception {exception.GetType().Name} at line {new StackTrace(exception, true).GetFrame(0).GetFileLineNumber()}]:{Environment.NewLine}{exception.StackTrace}");
 
         }
 
@@ -260,7 +266,7 @@ namespace ChaseLabs.CLLogger
 
         public void Warn(object message, Exception exception)
         {
-            SendMessage(Pattern.Replace("%DATE%", DateTime.Now.ToString()).Replace("%TYPE%", "WARN").Replace("%MESSAGE%", message as string) + $" [Exception {exception.GetType().Name} ]:{Environment.NewLine}{exception.StackTrace}");
+            SendMessage(Pattern.Replace("%DATE%", DateTime.Now.ToString()).Replace("%TYPE%", "WARN").Replace("%MESSAGE%", message as string) + $" [Exception {exception.GetType().Name} at line {new StackTrace(exception, true).GetFrame(0).GetFileLineNumber()}]:{Environment.NewLine}{exception.StackTrace}");
 
         }
 
@@ -279,7 +285,7 @@ namespace ChaseLabs.CLLogger
 
         public void Error(object message, Exception exception)
         {
-            SendMessage(Pattern.Replace("%DATE%", DateTime.Now.ToString()).Replace("%TYPE%", "ERROR").Replace("%MESSAGE%", message as string) + $" [Exception {exception.GetType().Name} ]:{Environment.NewLine}{exception.StackTrace}");
+            SendMessage(Pattern.Replace("%DATE%", DateTime.Now.ToString()).Replace("%TYPE%", "ERROR").Replace("%MESSAGE%", message as string) + $" [Exception {exception.GetType().Name} at line {new StackTrace(exception, true).GetFrame(0).GetFileLineNumber()}]:{Environment.NewLine}{exception.StackTrace}");
         }
 
         public void Fatal(object message)
@@ -297,7 +303,7 @@ namespace ChaseLabs.CLLogger
 
         public void Fatal(object message, Exception exception)
         {
-            SendMessage(Pattern.Replace("%DATE%", DateTime.Now.ToString()).Replace("%TYPE%", "DEBUG").Replace("%MESSAGE%", message as string) + $" [Exception {exception.GetType().Name} ]:{Environment.NewLine}{exception.StackTrace}");
+            SendMessage(Pattern.Replace("%DATE%", DateTime.Now.ToString()).Replace("%TYPE%", "DEBUG").Replace("%MESSAGE%", message as string) + $" [Exception {exception.GetType().Name} at line {new StackTrace(exception, true).GetFrame(0).GetFileLineNumber()}]:{Environment.NewLine}{exception.StackTrace}");
         }
     }
 }

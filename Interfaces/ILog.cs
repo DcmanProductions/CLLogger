@@ -19,7 +19,7 @@ namespace ChaseLabs.CLLogger.Interfaces
         bool IsInfoEnabled { get; }
         bool IsDebugEnabled { get; }
         bool IsErrorEnabled { get; }
-        string Pattern { get; set; }
+        string Pattern { get; }
         /// <summary>
         /// A Debug Log with a Single Message
         /// </summary>

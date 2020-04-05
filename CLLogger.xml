@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CLLogger</name>
+    </assembly>
+    <members>
+        <member name="T:ChaseLabs.CLLogger.Events.LogEventArgs">
+            <summary>
+            <para>
+            Author: Drew Chase
+            </para>
+            <para>
+            Company: Chase Labs
+            </para>
+            </summary>
+        </member>
+        <member name="P:ChaseLabs.CLLogger.Events.LogEventArgs.Log">
+            <summary>
+            Log Message
+            </summary>
+        </member>
+        <member name="T:ChaseLabs.CLLogger.Events.LogEventHandler">
+            <summary>
+            <list type="table">
+            <item>
+            Author: Drew Chase
+            </item>
+            <item>
+            Company: Chase Labs
+            </item>
+            </list>
+            </summary>
+        </member>
+        <member name="T:ChaseLabs.CLLogger.Interfaces.ILog">
+            <summary>
+            <list type="table">
+            <item>
+            Author: Drew Chase
+            </item>
+            <item>
+            Company: Chase Labs
+            </item>
+            </list>
+            </summary>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Debug(System.Object)">
+            <summary>
+            A Debug Log with a Single Message
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Debug(System.Object[])">
+            <summary>
+            A Debug Log with Multiple Messages
+            </summary>
+            <param name="messages"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Debug(System.Object,System.Exception)">
+            <summary>
+            A Debug Log with a Single Message and an Exception
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Info(System.Object,System.Exception)">
+            <summary>
+            A Info Log with a Single Message and a Exception
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Info(System.Object)">
+            <summary>
+            A Info Log with a Single Message
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Info(System.Object[])">
+            <summary>
+            A Info Log with Multiple Messages
+            </summary>
+            <param name="messages"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Warn(System.Object)">
+            <summary>
+            A Warn Log with a Single Message
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Warn(System.Object[])">
+            <summary>
+            A Warn Log with Multiple Messages
+            </summary>
+            <param name="messages"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Warn(System.Object,System.Exception)">
+            <summary>
+            A Warn Log with a Single Message and an Exception
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Error(System.Object)">
+            <summary>
+            A Error Log with a Single Message
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Error(System.Object[])">
+            <summary>
+            A Error Log with Multiple Messages
+            </summary>
+            <param name="messages"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Error(System.Object,System.Exception)">
+            <summary>
+            A Error Log with a Single Message and a Exception
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Fatal(System.Object)">
+            <summary>
+            A Fatal Log with a Single Message
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Fatal(System.Object[])">
+            <summary>
+            A Fatal Log with Multiple Messages
+            </summary>
+            <param name="messages"></param>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.Interfaces.ILog.Fatal(System.Object,System.Exception)">
+            <summary>
+            A Fatal Log with a Single Message and a Exception
+            </summary>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="T:ChaseLabs.CLLogger.Lists">
+            <summary>
+            <para>
+            Author: Drew Chase
+            </para>
+            <para>
+            Company: Chase Labs
+            </para>
+            </summary>
+        </member>
+        <member name="T:ChaseLabs.CLLogger.Lists.LogTypes">
+             <summary>
+             <list type="table">
+             <listheader>Log Importance Order</listheader>
+             <item>
+             All: Display All Logs
+             </item>
+             <item>
+             Debug: Display All Logs
+             </item>
+             <item>
+             Info: Display Logs From Info to Fatal
+             </item>
+             <item>
+             Warn: Display Logs from Warn to Fatal
+             </item>
+             <item>
+             Error: Display Logs from Error to Fatal
+             </item>
+            <item>
+             Fatal: Display only Fatal Logs
+            </item>
+             </list>
+             </summary>
+        </member>
+        <member name="T:ChaseLabs.CLLogger.Lists.RollOverType">
+            <summary>
+            <list type="table">
+            <item>
+            None: The Log File will Never Roll Over (Not Recommended)
+            </item>
+            <item>
+            Date: The Log File will Roll Over every day
+            </item>
+            <item>
+            Size: The Log File will Roll Over once the File has reached a specified Size.
+            </item>
+            <item>
+            OnLaunch: The Log File will Roll Over upon the application closing
+            </item>
+            </list>
+            </summary>
+        </member>
+        <member name="T:ChaseLabs.CLLogger.Lists.RollOverFormatType">
+            <summary>
+            <list type="table">
+            <listheader>The File Name Change when Rolling Over</listheader>
+            <item>
+            Date: The File will change to the Current Date and Time.
+            </item>
+            <item>
+            Number: The File will change to a Incremented Number
+            <code>latest.log -> 1.log -> 2.log -></code>
+            </item>
+            </list>
+            </summary>
+        </member>
+        <member name="T:ChaseLabs.CLLogger.LogManger">
+            <summary>
+            <para>
+            Author: Drew Chase
+            </para>
+            <para>
+            Company: Chase Labs
+            </para>
+            </summary>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.LogManger.Init">
+            <summary>
+            Initializes an Empty LogManager
+            <para>See <see cref="M:ChaseLabs.CLLogger.LogManger.Empty"/></para>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.LogManger.SetMinLogType(ChaseLabs.CLLogger.Lists.LogTypes)">
+            <summary>
+            Sets the Minimum Log Type
+            </summary>
+            <param name="minLogType">See <see cref="T:ChaseLabs.CLLogger.Lists.LogTypes"/> Documentation for Sorting Order</param>
+            <returns></returns>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.LogManger.SetLogDirectory(System.String)">
+            <summary>
+            Sets the Log File Path
+            </summary>
+            <param name="path">Log Path<para>Example</para><code>path="c:\temp\latest.log"</code></param>
+            <returns></returns>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.LogManger.SetLogDirectory(System.IO.FileInfo)">
+            <summary>
+            Sets the Log File Path
+            </summary>
+            <param name="path">Log Path<para>Example</para><code>path="c:\temp\latest.log"</code></param>
+            <returns></returns>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.LogManger.EnableDefaultConsoleLogging">
+            <summary>
+            Enables Logging for Default Console.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.LogManger.DisableDefaultConsoleLogging">
+            <summary>
+            Disables Logging for Default Console.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.LogManger.SetPattern(System.String)">
+            <summary>
+            <para>%DATE% - Current Date and Time</para>
+            <para>%TYPE% - Log Type</para>
+            <para>%MESSAGE% - The Message</para>
+            Example
+            <code>
+            [ %TYPE%: %DATE% ]: %MESSAGE%
+            </code>
+            <para>[ ERROR: 01/01/1999/8:30:25 ] Example Message is Surprising</para>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.LogManger.Empty">
+            <summary>
+            <para>
+            Default Path: <code>C:\Default-Log-File-Location(Please_Change)\latest.log</code>
+            </para>
+            <para>
+            Default Minimum Log Type: All Logs
+            </para>
+            </summary>
+            <returns>a Empty LogManager Object</returns>
+        </member>
+        <member name="P:ChaseLabs.CLLogger.LogManger.IsFatalEnabled">
+            <summary>
+            Returns if Fatal Messages will be Logged
+            </summary>
+        </member>
+        <member name="P:ChaseLabs.CLLogger.LogManger.IsWarnEnabled">
+            <summary>
+            Returns if Warning Messages will be Logged
+            </summary>
+        </member>
+        <member name="P:ChaseLabs.CLLogger.LogManger.IsInfoEnabled">
+            <summary>
+            Returns if Informational Messages will be Logged
+            </summary>
+        </member>
+        <member name="P:ChaseLabs.CLLogger.LogManger.IsDebugEnabled">
+            <summary>
+            Returns if Debug Messages will be Logged
+            </summary>
+        </member>
+        <member name="P:ChaseLabs.CLLogger.LogManger.IsErrorEnabled">
+            <summary>
+            Returns if Error Messages will be Logged
+            </summary>
+        </member>
+        <member name="P:ChaseLabs.CLLogger.LogManger.Pattern">
+            <summary>
+            <para>%DATE% - Current Date and Time</para>
+            <para>%TYPE% - Log Type</para>
+            <para>%MESSAGE% - The Message</para>
+            Example
+            <code>
+            [ %TYPE%: %DATE% ]: %MESSAGE%
+            </code>
+            <para>[ ERROR: 01/01/1999/8:30:25 ] Example Message is Surprising</para>
+            </summary>
+        </member>
+        <member name="P:ChaseLabs.CLLogger.LogManger.Path">
+            <summary>
+            Gets the Current Log File Path
+            </summary>
+        </member>
+        <member name="M:ChaseLabs.CLLogger.LogManger.OnMessageLogged(System.String)">
+            <summary>
+            Runs Every Time a Message is Logged
+            </summary>
+        </member>
+    </members>
+</doc>

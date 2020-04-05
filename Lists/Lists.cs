@@ -10,6 +10,7 @@
     /// </summary>
     public class Lists
     {
+
         /// <summary>
         /// <list type="table">
         /// <listheader>Log Importance Order</listheader>
@@ -59,7 +60,7 @@
         /// </item>
         /// </list>
         /// </summary>
-        public enum RollOverType
+        private enum RollOverType
         {
             None,
             Date,
@@ -79,7 +80,7 @@
         /// </item>
         /// </list>
         /// </summary>
-        public enum RollOverFormatType
+        private enum RollOverFormatType
         {
             Date,
             Number

@@ -12,6 +12,9 @@ namespace ChaseLabs.CLLogger.Events
     /// </summary>
     public class LogEventArgs : EventArgs
     {
+        /// <summary>
+        /// Log Message
+        /// </summary>
         public string Log { get; set; }
     }
 }

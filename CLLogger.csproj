@@ -9,14 +9,22 @@
     <RepositoryUrl>https://github.com/DcmanProductions/CLLogger.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/DcmanProductions/CLLogger</PackageProjectUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <Version>0.0.5</Version>
+    <Version>0.0.7</Version>
     <Authors>Drew Chase</Authors>
     <Company>ChaseLabs</Company>
     <Product>Simple Logging</Product>
     <Description>An easy to use file logging system.</Description>
     <Copyright>2020</Copyright>
-    <PackageReleaseNotes>Added Event Handler for Logging</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed Ambiguous usage of Path and SetPath</PackageReleaseNotes>
     <PackageTags>Utilities Logging Log ChaseLabs Helpers</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Workspaces\Visual Studio Workspace\C#\Class Library\Libraries\CLLogger\CLLogger.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
